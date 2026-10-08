@@ -7,18 +7,25 @@ def run_collaborative_agents(
         planner_model, 
         generator_model, 
         temperature=0, 
-        verbose=False
+        verbose=False,
+        provider=None,
+        llm_options=None,
+        max_iterations=5,
+        target_coverage=100
     ): 
+    llm_options = llm_options or {}
     
     llm_planner = get_llm(
-        provider='groq', 
+        provider=provider, 
         model_name=planner_model, 
-        temperature=temperature
+        temperature=temperature,
+        **llm_options
     )
     llm_generator = get_llm(
-        provider='groq', 
+        provider=provider, 
         model_name=generator_model, 
-        temperature=temperature
+        temperature=temperature,
+        **llm_options
     )
 
     agents = MultiAgentCollaborativeGraph(
@@ -26,7 +33,9 @@ def run_collaborative_agents(
         output_dir,
         llm_planner,
         llm_generator,
-        verbose
+        verbose,
+        max_iterations=max_iterations,
+        target_coverage=target_coverage
     )
 
     final_state = agents.invoke()

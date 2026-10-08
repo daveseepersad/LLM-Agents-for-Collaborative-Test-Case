@@ -8,23 +8,31 @@ def run_competitive_agents(
         generator_model_1, 
         generator_model_2, 
         temperature=0, 
-        verbose=False
+        verbose=False,
+        provider=None,
+        llm_options=None,
+        max_iterations=5,
+        target_coverage=100
     ): 
+    llm_options = llm_options or {}
 
     llm_planner = get_llm(
-        provider='groq',
+        provider=provider,
         model_name=planner_model, 
-        temperature=temperature
+        temperature=temperature,
+        **llm_options
     )
     llm_generator_1 = get_llm(
-        provider='groq', 
+        provider=provider, 
         model_name=generator_model_1, 
-        temperature=temperature
+        temperature=temperature,
+        **llm_options
     )
     llm_generator_2 = get_llm(
-        provider='groq', 
+        provider=provider, 
         model_name=generator_model_2, 
-        temperature=temperature
+        temperature=temperature,
+        **llm_options
     )
 
     agents = MultiAgentCompetitiveGraph(
@@ -33,7 +41,9 @@ def run_competitive_agents(
         llm_planner,
         llm_generator_1,
         llm_generator_2,
-        verbose
+        verbose,
+        max_iterations=max_iterations,
+        target_coverage=target_coverage
     )
 
     final_state = agents.invoke()

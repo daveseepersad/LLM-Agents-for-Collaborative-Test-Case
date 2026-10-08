@@ -2,11 +2,13 @@ experiment:
   input_path: "data/input_code"      # Can be a specific .py file or a folder
 
 llm:
+  provider: "groq"                   # groq | azure_foundry (see README); a model can override it with a "<provider>:" prefix
   temperature: 0.0
 
 agent:
   verbose: false
-  max_iterations: 5
+  max_iterations: 5                  # executor rounds before the multi-agent loop stops (the loop runs up to max_iterations + 1)
+  target_coverage: 100               # multi-agent loops re-plan while line coverage is below this percentage
   enforce_strict_imports: true
 
 logging:

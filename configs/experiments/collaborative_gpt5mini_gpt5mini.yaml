@@ -1,0 +1,14 @@
+experiment:
+  type: "collaborative_agents"
+  name: "collaborative_gpt5mini_gpt5mini"
+  input_path: "data/input_code"
+
+llm:
+  provider: "azure_foundry"
+  planner_model: "gpt-5-mini"      # Azure AI Foundry deployment names
+  generator_model: "gpt-5-mini"
+  temperature: 1.0                 # gpt-5-mini only supports its default temperature (1)
+  reasoning_effort: "medium"       # minimal | low | medium | high
+
+agent:
+  max_iterations: 5

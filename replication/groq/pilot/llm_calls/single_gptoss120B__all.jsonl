@@ -1,0 +1,6 @@
+{"start": 1791422170.9335935, "end": 1791422173.739815, "model": "openai/gpt-oss-120b", "prompt_tokens": 741, "completion_tokens": 1149, "total_tokens": 1890, "finish_reason": "stop"}
+{"start": 1791422176.2073827, "end": 1791422183.9119394, "model": "openai/gpt-oss-120b", "prompt_tokens": 2029, "completion_tokens": 3484, "total_tokens": 5513, "finish_reason": "stop"}
+{"start": 1791422421.479628, "end": 1791422424.802109, "model": "openai/gpt-oss-120b", "prompt_tokens": 999, "completion_tokens": 1408, "total_tokens": 2407, "finish_reason": "stop"}
+{"start": 1791422497.608937, "end": 1791422500.0867796, "model": "openai/gpt-oss-120b", "prompt_tokens": 536, "completion_tokens": 1063, "total_tokens": 1599, "finish_reason": "stop"}
+{"start": 1791422550.9660225, "end": 1791422553.4113727, "model": "openai/gpt-oss-120b", "prompt_tokens": 674, "completion_tokens": 954, "total_tokens": 1628, "finish_reason": "stop"}
+{"start": 1791422589.3705857, "end": 1791422600.870168, "model": "openai/gpt-oss-120b", "prompt_tokens": 1386, "completion_tokens": 2190, "total_tokens": 3576, "finish_reason": "stop"}

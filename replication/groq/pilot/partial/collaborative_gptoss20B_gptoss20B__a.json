@@ -1,0 +1,84 @@
+{
+    "experiment_name": "collaborative_gptoss20B_gptoss20B",
+    "temperature": 0.2,
+    "llm": {
+        "temperature": 0.2,
+        "provider": "azure_foundry",
+        "planner_model": "groq:openai/gpt-oss-20b",
+        "generator_model": "groq:openai/gpt-oss-20b"
+    },
+    "agent": {
+        "max_iterations": 10,
+        "target_coverage": 100
+    },
+    "replication": {
+        "host": "groq",
+        "protocol": "archive",
+        "timezone": "Asia/Tokyo",
+        "pass": "a",
+        "partial": true,
+        "note": "Pilot stopped during d05 at the free tier's daily token limit; d05 and d06 (pass b) did not run. Metrics are copied from the pass log."
+    },
+    "results": [
+        {
+            "file": "d01_bank.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 14,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "total_tokens": 6279,
+                "mutation_score_percent": 62.96,
+                "mutation_killed": 17,
+                "mutation_survived": 10
+            }
+        },
+        {
+            "file": "d02_stack.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 36,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "total_tokens": 19285,
+                "mutation_score_percent": 77.78,
+                "mutation_killed": 14,
+                "mutation_survived": 4
+            }
+        },
+        {
+            "file": "d03_linked_list.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 16,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "total_tokens": 6986,
+                "mutation_score_percent": 87.72,
+                "mutation_killed": 50,
+                "mutation_survived": 7
+            }
+        },
+        {
+            "file": "d04_library.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 12,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "total_tokens": 13056,
+                "mutation_score_percent": 60.53,
+                "mutation_killed": 23,
+                "mutation_survived": 15
+            }
+        }
+    ]
+}

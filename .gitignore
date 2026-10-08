@@ -2,6 +2,7 @@
 *.pdf
 __pycache__
 venv/
+.venv/
 report_template/
 .DS_Store
 .pytest_cache
@@ -12,3 +13,6 @@ report_template/
 .mutmut-cache
 *.csv
 descrizione_architetture.md
+
+# Replication run logs stay local: they repeat the results files and name the Azure resource.
+replication/**/*.log

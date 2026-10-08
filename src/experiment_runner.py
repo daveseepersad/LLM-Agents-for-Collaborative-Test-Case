@@ -18,6 +18,7 @@ from src.agents.multi_agent_competitive.multi_agent_competitive_runner import ru
 from src.utils.mutmut_runner import get_mutation_metrics
 from src.utils.code_parser import remove_failed_tests
 from src.utils.pytest_runner import run_pytest
+from src.agents.llm_factory import llm_options_from_config, normalize_provider
 
 
 def get_files_to_process(input_path_str):
@@ -40,10 +41,19 @@ def run_experiment(cfg):
     input_path = cfg.get('experiment', 'input_path')
     output_dir = cfg.run_id  # Use the unique run_id from ConfigManager
     temperature = cfg.get('llm', 'temperature') 
+    provider = normalize_provider(cfg.get('llm', 'provider'))
+    llm_options = llm_options_from_config(cfg.config.get('llm'))
+    loop_settings = {
+        "max_iterations": cfg.get('agent', 'max_iterations') or 5,
+        "target_coverage": cfg.get('agent', 'target_coverage') or 100,
+    }
     
     logger.info(f"🚀 Starting Experiment. Strategy: {strategy}")
     logger.info(f"📂 Input Path: {input_path}")
+    logger.info(f"🤖 LLM Provider: {provider} {llm_options or ''}")
     logger.info(f"🌡️  Temperature: {temperature}")
+    if strategy != "single_agent":
+        logger.info(f"🔁 Loop: {loop_settings}")
 
     files = get_files_to_process(input_path)
     logger.info(f"📝 Found {len(files)} file(s) to process.")
@@ -63,7 +73,9 @@ def run_experiment(cfg):
                     input_file_path=str(input_file_path),
                     output_dir=output_dir,
                     model=cfg.get('llm', 'model'),
-                    temperature=temperature 
+                    temperature=temperature,
+                    provider=provider,
+                    llm_options=llm_options
                 )
 
             elif strategy == "collaborative_agents":
@@ -73,7 +85,10 @@ def run_experiment(cfg):
                     planner_model=cfg.get('llm', 'planner_model'),
                     generator_model=cfg.get('llm', 'generator_model'),
                     temperature=temperature, 
-                    verbose=cfg.get('agent', 'verbose')
+                    verbose=cfg.get('agent', 'verbose'),
+                    provider=provider,
+                    llm_options=llm_options,
+                    **loop_settings
                 )
 
             elif strategy == "competitive_agents":
@@ -84,7 +99,10 @@ def run_experiment(cfg):
                     generator_model_1=cfg.get('llm', 'generator_model_1'),
                     generator_model_2=cfg.get('llm', 'generator_model_2'),
                     temperature=temperature,
-                    verbose=cfg.get('agent', 'verbose')
+                    verbose=cfg.get('agent', 'verbose'),
+                    provider=provider,
+                    llm_options=llm_options,
+                    **loop_settings
                 )
             
             else:

@@ -4,6 +4,7 @@ import logging
 
 from src.utils.code_parser import clean_llm_python, syntax_check
 from src.utils.pytest_runner import run_pytest
+from src.agents.llm_factory import total_tokens
 from src.utils.file_manager import obtain_import_module_str, read_text
 
 
@@ -59,9 +60,7 @@ While generating the output, you have to follow those instructions:
         response = chain.invoke(chain_input)
         
         # Extract tokens
-        tokens = 0
-        if hasattr(response, 'response_metadata'):
-             tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+        tokens = total_tokens(response)
 
         self.generated_tests = clean_llm_python(response.content)
 

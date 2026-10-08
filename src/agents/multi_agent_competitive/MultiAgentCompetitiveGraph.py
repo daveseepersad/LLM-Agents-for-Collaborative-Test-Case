@@ -7,6 +7,7 @@ import logging
 from src.utils.file_manager import obtain_import_module_str, read_text
 from src.utils.code_parser import clean_llm_python, syntax_check
 from src.utils.pytest_runner import run_pytest
+from src.agents.llm_factory import total_tokens
 
 # Simple ANSI color helper for terminal prints
 _ANSI_COLORS = {
@@ -58,12 +59,13 @@ class AgentState(TypedDict):
 
 
 class MultiAgentCompetitiveGraph:
-    def __init__(self, input_file_path, output_dir, llm_planner, llm_generator_1, llm_generator_2, verbose = True):
+    def __init__(self, input_file_path, output_dir, llm_planner, llm_generator_1, llm_generator_2, verbose = True, max_iterations = 5, target_coverage = 100):
         self.output_dir = output_dir
         self.llm_planner = llm_planner
         self.llm_generator_1 = llm_generator_1
         self.llm_generator_2 = llm_generator_2
         self.verbose = verbose
+        self.target_coverage = target_coverage  # re-plan while coverage is below this percentage
         self.logger = logging.getLogger("Agent")
 
         self.graph = self._build_graph()
@@ -87,7 +89,7 @@ class MultiAgentCompetitiveGraph:
             "n_passed_tests": 0,
             "n_failed_tests": 0,
             "iterations": 0,
-            "max_iterations": 5,
+            "max_iterations": max_iterations,
             "total_tokens": 0,
             "dev_1_step_tokens": 0,
             "dev_2_step_tokens": 0
@@ -172,7 +174,7 @@ class MultiAgentCompetitiveGraph:
             response = chain.invoke(invoke_args)
             
             # Count Tokens
-            tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+            tokens = total_tokens(response)
             current_tokens = state.get("total_tokens", 0)
 
             if self.verbose: 
@@ -249,7 +251,7 @@ class MultiAgentCompetitiveGraph:
             response = chain.invoke(invoke_args)
             
             # Count Tokens
-            tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+            tokens = total_tokens(response)
             current_tokens = state.get("total_tokens", 0)
 
             # --- LOGICA DI APPEND PURA ---
@@ -467,7 +469,7 @@ class MultiAgentCompetitiveGraph:
         response = chain.invoke(invoke_args)
         
         # Capture tokens
-        tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+        tokens = total_tokens(response)
 
         cleaned_tests = clean_llm_python(response.content)
 
@@ -591,7 +593,7 @@ class MultiAgentCompetitiveGraph:
             return ["developer_1", "developer_2"]
 
         current_cov = state.get("coverage_percent", 0)
-        if current_cov < 100:
+        if current_cov < self.target_coverage:
             return "planner"
 
         return END

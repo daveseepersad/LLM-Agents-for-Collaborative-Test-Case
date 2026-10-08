@@ -1,0 +1,166 @@
+{
+    "run_id": "competitive_llamaScout17B_gptoss120B_llama70B_2026-10-06T21-39-59",
+    "experiment_name": "competitive_llamaScout17B_gptoss120B_llama70B",
+    "timestamp": "2026-10-06T21-39-59",
+    "temperature": 0.2,
+    "llm": {
+        "provider": "azure_foundry",
+        "temperature": 0.2,
+        "reasoning_effort": null,
+        "models": {
+            "planner_model": {
+                "provider": "azure_foundry",
+                "model": "Phi-4",
+                "temperature": 0.2
+            },
+            "generator_model_1": {
+                "provider": "azure_foundry",
+                "model": "gpt-oss-120b",
+                "temperature": 0.2
+            },
+            "generator_model_2": {
+                "provider": "azure_foundry",
+                "model": "Llama-3.3-70B-Instruct",
+                "temperature": 0.2
+            }
+        }
+    },
+    "replication": {
+        "protocol": "archive",
+        "model_map": {
+            "openai/gpt-oss-120b": "gpt-oss-120b",
+            "llama-3.3-70b-versatile": "Llama-3.3-70B-Instruct",
+            "openai/gpt-oss-20b": "gpt-5-nano",
+            "meta-llama/llama-4-scout-17b-16e-instruct": "Phi-4"
+        },
+        "host": "azure_foundry",
+        "passes": [
+            {
+                "name": "a",
+                "modules": [
+                    "d01_bank.py",
+                    "d02_stack.py",
+                    "d03_linked_list.py",
+                    "d04_library.py",
+                    "d05_hotel.py"
+                ],
+                "agent": {
+                    "max_iterations": 10,
+                    "target_coverage": 100
+                },
+                "run_id": "competitive_llamaScout17B_gptoss120B_llama70B_2026-10-06T21-28-46",
+                "elapsed_seconds": 679
+            },
+            {
+                "name": "b",
+                "modules": [
+                    "d06_complex_logic.py"
+                ],
+                "agent": {
+                    "max_iterations": 5,
+                    "target_coverage": 100
+                },
+                "run_id": "competitive_llamaScout17B_gptoss120B_llama70B_2026-10-06T21-28-46",
+                "elapsed_seconds": 509
+            }
+        ]
+    },
+    "results": [
+        {
+            "file": "d01_bank.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 13,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "cost": 0,
+                "total_tokens": 5555,
+                "mutation_score_percent": 59.26,
+                "mutation_killed": 16,
+                "mutation_survived": 11
+            }
+        },
+        {
+            "file": "d02_stack.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 10,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "cost": 0,
+                "total_tokens": 6643,
+                "mutation_score_percent": 77.78,
+                "mutation_killed": 14,
+                "mutation_survived": 4
+            }
+        },
+        {
+            "file": "d03_linked_list.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 20,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 1,
+                "cost": 0,
+                "total_tokens": 6594,
+                "mutation_score_percent": 94.74,
+                "mutation_killed": 54,
+                "mutation_survived": 3
+            }
+        },
+        {
+            "file": "d04_library.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 11,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 2,
+                "cost": 0,
+                "total_tokens": 15090,
+                "mutation_score_percent": 84.21,
+                "mutation_killed": 32,
+                "mutation_survived": 6
+            }
+        },
+        {
+            "file": "d05_hotel.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 15,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 2,
+                "cost": 0,
+                "total_tokens": 21410,
+                "mutation_score_percent": 59.65,
+                "mutation_killed": 34,
+                "mutation_survived": 23
+            }
+        },
+        {
+            "file": "d06_complex_logic.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 96,
+                "n_passed_tests": 25,
+                "n_failed_tests": 2,
+                "failed_tests_infos": "",
+                "iterations": 6,
+                "cost": 0,
+                "total_tokens": 84430,
+                "mutation_score_percent": 67.44,
+                "mutation_killed": 87,
+                "mutation_survived": 42
+            }
+        }
+    ]
+}

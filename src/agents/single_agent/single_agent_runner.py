@@ -5,13 +5,16 @@ def run_single_agent(
         input_file_path,
         output_dir,
         model,
-        temperature=0
+        temperature=0,
+        provider=None,
+        llm_options=None
     ): 
     # Pass temperature to factory
     llm = get_llm(
-        provider='groq',
+        provider=provider,
         model_name=model,
-        temperature=temperature
+        temperature=temperature,
+        **(llm_options or {})
     )
     
     agent = SingleAgentChain(

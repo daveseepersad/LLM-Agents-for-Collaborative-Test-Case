@@ -7,6 +7,7 @@ import logging
 from src.utils.file_manager import obtain_import_module_str, read_text
 from src.utils.code_parser import clean_llm_python, syntax_check
 from src.utils.pytest_runner import run_pytest
+from src.agents.llm_factory import total_tokens
 
 # Simple ANSI color helper for terminal prints
 _ANSI_COLORS = {
@@ -53,11 +54,12 @@ class AgentState(TypedDict):
 
 
 class MultiAgentCollaborativeGraph:
-    def __init__(self, input_file_path, output_dir, llm_planner, llm_generator, verbose = True):
+    def __init__(self, input_file_path, output_dir, llm_planner, llm_generator, verbose = True, max_iterations = 5, target_coverage = 100):
         self.output_dir = output_dir
         self.llm_planner = llm_planner
         self.llm_generator = llm_generator
         self.verbose = verbose
+        self.target_coverage = target_coverage  # re-plan while coverage is below this percentage
         self.logger = logging.getLogger("Agent")
 
         self.graph = self._build_graph()
@@ -79,7 +81,7 @@ class MultiAgentCollaborativeGraph:
             "n_passed_tests": 0,
             "n_failed_tests": 0,
             "iterations": 0,
-            "max_iterations": 5,
+            "max_iterations": max_iterations,
             "total_tokens": 0 
         }
 
@@ -164,7 +166,7 @@ class MultiAgentCollaborativeGraph:
             response = chain.invoke(invoke_args)
             
             # Count Tokens
-            tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+            tokens = total_tokens(response)
             current_tokens = state.get("total_tokens", 0)
 
             if self.verbose: 
@@ -241,7 +243,7 @@ class MultiAgentCollaborativeGraph:
             response = chain.invoke(invoke_args)
             
             # Count Tokens
-            tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+            tokens = total_tokens(response)
             current_tokens = state.get("total_tokens", 0)
 
             # --- PURE APPEND LOGIC ---
@@ -437,7 +439,7 @@ class MultiAgentCollaborativeGraph:
         response = chain.invoke(invoke_args)
         
         # Count Tokens
-        tokens = response.response_metadata.get('token_usage', {}).get('total_tokens', 0)
+        tokens = total_tokens(response)
         current_tokens = state.get("total_tokens", 0)
 
         cleaned_tests = clean_llm_python(response.content)
@@ -524,7 +526,7 @@ class MultiAgentCollaborativeGraph:
             return "fix-tests"  
 
         current_cov = state.get("coverage_percent", 0)
-        if current_cov < 100:
+        if current_cov < self.target_coverage:
             return "replan" 
 
         return "end"

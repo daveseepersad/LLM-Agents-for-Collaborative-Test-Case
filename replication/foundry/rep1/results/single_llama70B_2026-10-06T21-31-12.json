@@ -1,0 +1,136 @@
+{
+    "run_id": "single_llama70B_2026-10-06T21-31-12",
+    "experiment_name": "single_llama70B",
+    "timestamp": "2026-10-06T21-31-12",
+    "temperature": 0.2,
+    "llm": {
+        "provider": "azure_foundry",
+        "temperature": 0.2,
+        "reasoning_effort": null,
+        "models": {
+            "model": {
+                "provider": "azure_foundry",
+                "model": "Llama-3.3-70B-Instruct",
+                "temperature": 0.2
+            }
+        }
+    },
+    "replication": {
+        "protocol": "archive",
+        "model_map": {
+            "openai/gpt-oss-120b": "gpt-oss-120b",
+            "llama-3.3-70b-versatile": "Llama-3.3-70B-Instruct",
+            "openai/gpt-oss-20b": "gpt-5-nano",
+            "meta-llama/llama-4-scout-17b-16e-instruct": "Llama-4-Maverick-17B-128E-Instruct-FP8"
+        },
+        "host": "azure_foundry",
+        "passes": [
+            {
+                "name": "all",
+                "modules": [
+                    "d01_bank.py",
+                    "d02_stack.py",
+                    "d03_linked_list.py",
+                    "d04_library.py",
+                    "d05_hotel.py",
+                    "d06_complex_logic.py"
+                ],
+                "agent": {},
+                "run_id": "single_llama70B_2026-10-06T21-18-42",
+                "elapsed_seconds": 756
+            }
+        ]
+    },
+    "results": [
+        {
+            "file": "d01_bank.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 17,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 0,
+                "total_tokens": 1031,
+                "mutation_score_percent": 59.26,
+                "mutation_killed": 16,
+                "mutation_survived": 11
+            }
+        },
+        {
+            "file": "d02_stack.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 22,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 0,
+                "total_tokens": 1309,
+                "mutation_score_percent": 77.78,
+                "mutation_killed": 14,
+                "mutation_survived": 4
+            }
+        },
+        {
+            "file": "d03_linked_list.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 97,
+                "n_passed_tests": 10,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 0,
+                "total_tokens": 1297,
+                "mutation_score_percent": 78.95,
+                "mutation_killed": 45,
+                "mutation_survived": 12
+            }
+        },
+        {
+            "file": "d04_library.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 100,
+                "n_passed_tests": 14,
+                "n_failed_tests": 0,
+                "failed_tests_infos": "",
+                "iterations": 0,
+                "total_tokens": 1916,
+                "mutation_score_percent": 57.89,
+                "mutation_killed": 22,
+                "mutation_survived": 16
+            }
+        },
+        {
+            "file": "d05_hotel.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 97,
+                "n_passed_tests": 15,
+                "n_failed_tests": 2,
+                "failed_tests_infos": "",
+                "iterations": 0,
+                "total_tokens": 2484,
+                "mutation_score_percent": 50.88,
+                "mutation_killed": 29,
+                "mutation_survived": 28
+            }
+        },
+        {
+            "file": "d06_complex_logic.py",
+            "status": "success",
+            "metrics": {
+                "coverage_percent": 77,
+                "n_passed_tests": 6,
+                "n_failed_tests": 5,
+                "failed_tests_infos": "",
+                "iterations": 0,
+                "total_tokens": 3289,
+                "mutation_score_percent": 30.23,
+                "mutation_killed": 39,
+                "mutation_survived": 90
+            }
+        }
+    ]
+}

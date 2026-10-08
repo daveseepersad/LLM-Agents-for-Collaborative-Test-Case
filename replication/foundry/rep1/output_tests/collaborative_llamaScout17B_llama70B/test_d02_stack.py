@@ -1,0 +1,180 @@
+import pytest
+from data.input_code.d02_stack import Stack, Queue
+
+@pytest.mark.parametrize('expected', [
+    ({'size': 0, 'is_empty': True})
+])
+def test_stack_init(expected):
+    stack = Stack()
+    assert stack.size() == expected['size']
+    assert stack.is_empty() == expected['is_empty']
+
+def test_stack_push():
+    stack = Stack()
+    stack.push(5)
+    assert stack.size() == 1
+
+@pytest.mark.parametrize('expected', [
+    (5)
+])
+def test_stack_pop(expected):
+    stack = Stack()
+    stack.push(5)
+    assert stack.pop() == expected
+
+def test_stack_pop_error():
+    stack = Stack()
+    with pytest.raises(IndexError):
+        stack.pop()
+
+@pytest.mark.parametrize('expected', [
+    (5)
+])
+def test_stack_peek(expected):
+    stack = Stack()
+    stack.push(5)
+    assert stack.peek() == expected
+
+def test_stack_peek_error():
+    stack = Stack()
+    with pytest.raises(IndexError):
+        stack.peek()
+
+@pytest.mark.parametrize('expected', [
+    (True)
+])
+def test_stack_is_empty_true(expected):
+    stack = Stack()
+    assert stack.is_empty() == expected
+
+@pytest.mark.parametrize('expected', [
+    (False)
+])
+def test_stack_is_empty_false(expected):
+    stack = Stack()
+    stack.push(5)
+    assert stack.is_empty() == expected
+
+@pytest.mark.parametrize('expected', [
+    (1)
+])
+def test_stack_size(expected):
+    stack = Stack()
+    stack.push(5)
+    assert stack.size() == expected
+
+@pytest.mark.parametrize('expected', [
+    ({'size': 0, 'is_empty': True})
+])
+def test_stack_clear(expected):
+    stack = Stack()
+    stack.push(5)
+    stack.clear()
+    assert stack.size() == expected['size']
+    assert stack.is_empty() == expected['is_empty']
+
+@pytest.mark.parametrize('expected', [
+    (1)
+])
+def test_stack_len(expected):
+    stack = Stack()
+    stack.push(5)
+    assert len(stack) == expected
+
+@pytest.mark.parametrize('item, expected', [
+    (5, True),
+    (10, False)
+])
+def test_stack_contains(item, expected):
+    stack = Stack()
+    stack.push(5)
+    assert (item in stack) == expected
+
+@pytest.mark.parametrize('expected', [
+    ({'size': 0, 'is_empty': True})
+])
+def test_queue_init(expected):
+    queue = Queue()
+    assert queue.size() == expected['size']
+    assert queue.is_empty() == expected['is_empty']
+
+def test_queue_enqueue():
+    queue = Queue()
+    queue.enqueue(5)
+    assert queue.size() == 1
+
+@pytest.mark.parametrize('expected', [
+    (5)
+])
+def test_queue_dequeue(expected):
+    queue = Queue()
+    queue.enqueue(5)
+    assert queue.dequeue() == expected
+
+def test_queue_dequeue_error():
+    queue = Queue()
+    with pytest.raises(IndexError):
+        queue.dequeue()
+
+@pytest.mark.parametrize('expected', [
+    (5)
+])
+def test_queue_front(expected):
+    queue = Queue()
+    queue.enqueue(5)
+    assert queue.front() == expected
+
+def test_queue_front_error():
+    queue = Queue()
+    with pytest.raises(IndexError):
+        queue.front()
+
+@pytest.mark.parametrize('expected', [
+    (True)
+])
+def test_queue_is_empty_true(expected):
+    queue = Queue()
+    assert queue.is_empty() == expected
+
+@pytest.mark.parametrize('expected', [
+    (False)
+])
+def test_queue_is_empty_false(expected):
+    queue = Queue()
+    queue.enqueue(5)
+    assert queue.is_empty() == expected
+
+@pytest.mark.parametrize('expected', [
+    (1)
+])
+def test_queue_size(expected):
+    queue = Queue()
+    queue.enqueue(5)
+    assert queue.size() == expected
+
+@pytest.mark.parametrize('expected', [
+    ({'size': 0, 'is_empty': True})
+])
+def test_queue_clear(expected):
+    queue = Queue()
+    queue.enqueue(5)
+    queue.clear()
+    assert queue.size() == expected['size']
+    assert queue.is_empty() == expected['is_empty']
+
+@pytest.mark.parametrize('expected', [
+    (1)
+])
+def test_queue_len(expected):
+    queue = Queue()
+    queue.enqueue(5)
+    assert len(queue) == expected
+
+@pytest.mark.parametrize('item, expected', [
+    (5, True),
+    (10, False)
+])
+def test_queue_contains(item, expected):
+    queue = Queue()
+    queue.enqueue(5)
+    assert (item in queue) == expected
